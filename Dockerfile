@@ -1,7 +1,7 @@
 FROM php:5.6-apache
 RUN apt-get update && apt-get install libxml2-dev git libicu-dev  g++ zlib1g-dev libmcrypt-dev -y 
 RUN docker-php-source extract
-RUN docker-php-ext-install zip mcrypt mbstring intl simplexml
+RUN docker-php-ext-install zip mcrypt mbstring intl simplexml pdo pdo_mysql
 RUN a2enmod rewrite
 COPY ./apache/000-default.conf /etc/apache2/sites-available
 RUN service apache2 restart 

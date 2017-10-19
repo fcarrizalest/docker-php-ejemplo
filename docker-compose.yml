@@ -1,8 +1,26 @@
 version: '2'
 services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cakephp
+      MYSQL_USER: cakephp
+      MYSQL_PASSWORD: cakephp
   server:
+    depends_on:
+      - db
     build: .
     ports:
      - "8080:80"
+    environment:
+      DEBUG: "true"
+      DATABASE_URL: mysql://cakephp:cakephp@db/cakephp?encoding=utf8&timezone=UTC&cacheMetadata=true
     volumes:
      - ./server/public:/var/www/html/
+
+volumes:
+  db_data:
